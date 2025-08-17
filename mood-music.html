@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mood-Based Music Recommender 🎵</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+      background: #f5f5f5;
+      transition: background-color 0.5s ease;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .mood-options {
+      margin: 20px 0;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    label {
+      padding: 10px 20px;
+      border: 2px solid #444;
+      border-radius: 25px;
+      margin: 10px;
+      cursor: pointer;
+      display: inline-block;
+      transition: 0.3s ease;
+      background-color: #fff;
+    }
+
+    label:hover {
+      background-color: #ddd;
+    }
+
+    .song {
+      margin-top: 30px;
+      font-size: 18px;
+      color: #444;
+    }
+
+    audio {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎧 Mood-Based Music Recommender</h1>
+  <p><em>Pick a mood and let the music match your vibe!</em></p>
+
+  <div class="mood-options">
+    <input type="radio" name="mood" id="happy" onclick="playSong('happy')">
+    <label for="happy">😊 Happy</label>
+
+    <input type="radio" name="mood" id="sad" onclick="playSong('sad')">
+    <label for="sad">😢 Sad</label>
+
+    <input type="radio" name="mood" id="relaxed" onclick="playSong('relaxed')">
+    <label for="relaxed">😌 Relaxed</label>
+
+    <input type="radio" name="mood" id="excited" onclick="playSong('excited')">
+    <label for="excited">🤩 Excited</label>
+  </div>
+
+  <div class="song" id="song-display">🎵 No song playing yet.</div>
+
+  <audio id="audio-player" controls></audio>
+
+  <script>
+    const songs = {
+      happy: {
+        title: '"Happy" by Pharrell Williams',
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        bg: "#FFF7D6"
+      },
+      sad: {
+        title: '"Someone Like You" by Adele',
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        bg: "#D6EAF8"
+      },
+      relaxed: {
+        title: '"Weightless" by Marconi Union',
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        bg: "#D5F5E3"
+      },
+      excited: {
+        title: '"Can’t Stop the Feeling!" by Justin Timberlake',
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", // ✅ confirmed working
+        bg: "#FADBD8"
+      }
+    };
+
+    const audioPlayer = document.getElementById("audio-player");
+    const display = document.getElementById("song-display");
+    const body = document.body;
+
+    function playSong(mood) {
+      const song = songs[mood];
+      audioPlayer.pause();
+      audioPlayer.src = song.src;
+
+      audioPlayer.play().then(() => {
+        display.textContent = `🎵 Now playing: ${song.title}`;
+        body.style.backgroundColor = song.bg;
+      }).catch(err => {
+        display.textContent = "⚠️ Autoplay blocked. Click Play button to start.";
+        console.error("Playback failed:", err);
+      });
+    }
+  </script>
+
+</body>
+</html>
